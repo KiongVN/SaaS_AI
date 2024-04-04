@@ -1,0 +1,22 @@
+{
+    "files.associations": {
+      "*.css": "tailwindcss"
+    },
+
+    "css.customData": [".vscode/css_custom_data.json"],
+
+    "scss.lint.unknownAtRules": "ignore",
+
+    "css.lint.unknownAtRules": "ignore",
+    "spellright.language": [
+      "en"
+    ],
+    "spellright.documentTypes": [
+      "latex",
+      "plaintext"
+    ]
+    
+
+}
+
+  
