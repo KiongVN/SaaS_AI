@@ -1,0 +1,1 @@
+export { default as UpgradeProModel} from './upgrade-pro-model'

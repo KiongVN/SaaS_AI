@@ -1,5 +1,7 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
+import { Toaster } from "@/components/ui/toaster"
+import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata = {
   title: 'Next.js',
@@ -15,7 +17,17 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body >{children}</body>
+        <body >
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+          {children}
+          <Toaster />
+        </ThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   )
