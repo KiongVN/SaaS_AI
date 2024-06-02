@@ -369,3 +369,61 @@ export const useProState = create<ProState>()((set) => ({
 ```
 - Stores này có những chức năng cơ bản để thay đổi trạng thái cuả những giá trị như isOpen, isMinimal 
 
+> container page dashboard vs conversation 
+- Thêm tương tự như làm thanh navbar vào bên trong 
+- tạo thêm khung nhập text 
+- tạo user-message, ai-response, markdown 
+- trong phần trả lời trong page của mỗi tool 
+- Quan trọng là call API từ OpenAI ==> Nhưng ở Nga không sử dụng được API của OPENAI
+  
+> Call API OpenAI
+
+- Call API cần tạo key từ Open AI ==> thêm key vào .env
+- code Call API:
+  
+  ```ts
+  import { auth } from "@clerk/nextjs";
+  import OpenAI from 'openai';
+  import { openai } from '@ai-sdk/openai';
+  import { StreamingTextResponse, streamText } from 'ai';
+  import { NextResponse } from "next/server";
+  const configuration = {
+    apiKey: process.env.OPENAI_API_KEY!,
+  };
+
+  export async function POST(req: Request) {
+    try {
+      const { userId } = auth();
+      const { messages } = await req.json();
+
+      if (!userId) {
+        return new NextResponse("Un authorized", { status: 401 });
+      }
+
+      if (!configuration.apiKey) {
+        return new NextResponse("Miss OpenAI API Key.", { status: 500 });
+      }
+
+      if (!messages) {
+        return new NextResponse("Messages are required", { status: 400 });
+      }
+
+
+      const result = await streamText({
+          model: openai('gpt-4-turbo'),
+          messages,
+        });
+      
+        return result.toAIStreamResponse();
+    } catch (error) {
+      if (error instanceof OpenAI.APIError) {
+        const { name, status, headers, message } = error;
+        return NextResponse.json({ name, status, headers, message }, { status });
+      } else {
+        throw error;
+      }
+    }
+  }
+  ```
+
+> **Vì giới hạn truy cập API chúng tôi sẽ tập chung nhiều vào cách làm dao diện sẽ vẫn tiếp tục làm và chú trọng vào Prisma vs PostgreSQL**
