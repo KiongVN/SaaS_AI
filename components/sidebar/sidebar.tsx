@@ -40,9 +40,9 @@ const Sidebar: React.FC<SidebarProps> = ({ className, isProPlan, userLimitCount 
         <Navbar />
       </div>
       <div className={cn(
-        "fixed bottom-8 left-1 right-4",
-        "lg:left-1 lg:right-auto",
-        !isMinimal && "lg:left-2"
+        "fixed bottom-8 left-4 right-4",
+        "lg:left-7 lg:right-auto",
+        isMinimal && "lg:left-3"
       )}>
         <div className="mb-4 p-4 rounded-lg bg-gray-900">
           <div className="mb-4 flex items-center">
